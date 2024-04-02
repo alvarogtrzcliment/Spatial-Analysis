@@ -8,6 +8,7 @@ from io import BytesIO
 import os
 import arcpy
 from arcpy.ia import *
+from datetime import datetime
 
 
 # Conectamos a ArcGIS Online
@@ -25,7 +26,7 @@ camarasTraficoDF = camarasTrafico.query(as_df=True)
 # ¡¡IMPORTANTE INSERTA LA RUTA DEL DIRECTORIO DE TRABAJO!!ç
 # Por favor crea una nueva carpeta donde se guarde la ejecución
 
-directorioTrabajo = 'C:\\Users\\alvaro.gutierrez\\DatosLocal\\Prueba2Camaras'
+directorioTrabajo = ''
 
 # Check de las extensiones necesarias
 
@@ -60,7 +61,7 @@ print('Directorio Imagenes Creado')
 
 # INserta Ruta del TextSAM.dlpk
 
-textSAM_dlpk = "C:/Users/alvaro.gutierrez/DatosLocal/Imagenes-deep-learning/DeepLearningPackage/TextSAM.dlpk"
+textSAM_dlpk = ""
 
 
 # Configuración de la herramienta
@@ -86,11 +87,11 @@ def DetectDGT (imagenEntradaModelo, rutaDeSalida ,prompt):
     "PROCESS_AS_MOSAICKED_IMAGE"
   )
 
-dFSalida = pd.DataFrame(columns = ['FID Image', 'VehiclesCount'])
+dFSalida = pd.DataFrame(columns = ['FID Image', 'VehiclesCount', 'Date'])
 
 # Configuración del Bucle que recorre todos los elementos
   
-for FID in range(2):
+for FID in range(len(camarasTraficoDF)):
 
   print(f'Iteración nº: {FID}')
 
@@ -114,13 +115,13 @@ for FID in range(2):
 
   # Ejecuto la herramienta
 
-  DetectDGT(urlIm, layerOutputUrl,'car')
+  DetectDGT(urlIm, layerOutputUrl,'car, vehicle')
 
   numeroVehiculos = arcpy.GetCount_management(layerName).getOutput(0)
 
-  dFSalida.loc[len(dFSalida.index)] = [f'imagenDGT{FID}', numeroVehiculos]
+  dFSalida.loc[len(dFSalida.index)] = [f'imagenDGT{FID}', float(numeroVehiculos), datetime.now()]
 
-# TODO: AQUI ESTA EL PROBLEMA NO ENTIENDO QUE PASA
+# Exportl el DF a excel
   
 nombreXLSXSalida = 'dFSalida.xlsx'
 
