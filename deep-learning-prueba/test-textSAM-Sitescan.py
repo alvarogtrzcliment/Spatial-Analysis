@@ -1,12 +1,7 @@
-# Importamos las librerías necesarias
-
 from arcgis.gis import GIS
 import os
 import arcpy
 from arcpy.ia import *
-from datetime import datetime
-
-horaInicio = datetime.now()
 
 # Conectamos a ArcGIS Online
 
@@ -15,7 +10,7 @@ gis = GIS("home")
 # ¡¡IMPORTANTE INSERTA LA RUTA DEL DIRECTORIO DE TRABAJO!!ç
 # Por favor crea una nueva carpeta donde se guarde la ejecución
 
-directorioTrabajo = 'C:\\Users\\alvaro.gutierrez\\DatosLocal\\PruebaSitescan'
+directorioTrabajo = 'C:\\Users\\alvaro.gutierrez\\DatosLocal\\PruebaSitescan2'
 
 # Check de las extensiones necesarias
 
@@ -28,7 +23,7 @@ arcpy.env.overwriteOutput = True
 
 # ¡¡CAMBIA EL NOMBRE DE LA GDB SI QUIERES!!
 
-nombreGDBSalida = 'resultados.gdb'
+nombreGDBSalida = 'resultadosCoches.gdb'
 
 arcpy.management.CreateFileGDB(directorioTrabajo, nombreGDBSalida)
 
@@ -68,7 +63,7 @@ def DetectDGT (imagenEntradaModelo, rutaDeSalida ,prompt):
 
 # Abro la imagen
 
-nombreImagen = 'DJI_0357.jpg'
+nombreImagen = 'DJI_0597.jpg'
 
 urlIm = os.path.join(directorioTrabajo,nombreImagen)
 
@@ -80,14 +75,8 @@ layerOutputUrl = os.path.join(rutaGDB, layerName)
 
 # Ejecuto la herramienta
 
-DetectDGT(urlIm, layerOutputUrl,'tree')
+DetectDGT(urlIm, layerOutputUrl,'car')
 
-numeroArboles = arcpy.GetCount_management(layerName).getOutput(0)
+numeroElementos = arcpy.GetCount_management(layerName).getOutput(0)
 
-print( f'Número de árboles: {numeroArboles}')
-
-horaFin = datetime.now()
-
-tiempoTotal = horaFin-horaInicio
-
-print(tiempoTotal)
+print( f'Número de coches: {numeroElementos}')
