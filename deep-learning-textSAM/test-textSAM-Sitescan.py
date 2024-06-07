@@ -10,7 +10,7 @@ gis = GIS("home")
 # ¡¡IMPORTANTE INSERTA LA RUTA DEL DIRECTORIO DE TRABAJO!!ç
 # Por favor crea una nueva carpeta donde se guarde la ejecución
 
-directorioTrabajo = 'C:\\Users\\alvaro.gutierrez\\DatosLocal\\PruebaSitescan2'
+directorioTrabajo = 'C:\\Users\\alvaro.gutierrez\\DatosLocal\\PruebaMeme'
 
 # Check de las extensiones necesarias
 
@@ -63,7 +63,7 @@ def DetectDGT (imagenEntradaModelo, rutaDeSalida ,prompt):
 
 # Abro la imagen
 
-nombreImagen = 'DJI_0597.jpg'
+nombreImagen = 'Meme.jpg'
 
 urlIm = os.path.join(directorioTrabajo,nombreImagen)
 
